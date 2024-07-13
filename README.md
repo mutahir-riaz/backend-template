@@ -20,13 +20,13 @@ Follow these steps to set up and use the Backend Template Creator CLI App:
 #### Clone the repository:
 
 ```http
-  git clone <repository-url>
+  git clone https://github.com/mutahir-riaz/backend-template.git
 ```
 
 ### Navigate to the project folder:
 
 ```http
-cd <repository-folder>
+cd backend-template
 ```
 
 ### Create a bin folder and move the cli.js file into it:
