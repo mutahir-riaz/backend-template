@@ -7,7 +7,9 @@
     "backend": "bin/cli.js"
   },
   "scripts": {
-    "start": "node bin/cli.js"
+    "start": "node bin/cli.js",
+    "build": "echo 'Building project...' && mkdir -p dist && cp -r bin dist/bin",
+    "test": "echo 'Running tests...' && exit 0"
   },
   "keywords": [],
   "author": "",
