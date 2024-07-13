@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node bin/cli.js",
-    "build": "echo 'Building project...' && mkdir -p dist && cp -r bin dist/bin",
+    "build": "echo 'No build steps necessary'",
     "test": "echo 'Running tests...' && exit 0"
   },
   "keywords": [],
