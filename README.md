@@ -17,7 +17,7 @@ Follow these steps to set up and use the Backend Template Creator CLI App:
 - Node.js and npm installed on your machine
 - commander installed in the cloned folder
 ### Installation
-#### Clone the repository:
+### Clone the repository:
 
 ```http
   git clone https://github.com/mutahir-riaz/backend-template.git
