@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
 const { execSync } = require('child_process');
 const fs = require('fs');
@@ -10,41 +10,56 @@ program
   .command('init')
   .description('Initialize a new Node.js project, install packages, and create folder structure')
   .action(() => {
-    // Initialize a new Node.js project
-    execSync('npx npm init -y', { stdio: 'inherit' });
+    // Create 'backend' folder
+    const backendDir = path.join(process.cwd(), 'backendTemp');
+    if (!fs.existsSync(backendDir)) {
+      fs.mkdirSync(backendDir);
+      console.log('Created folder: backend');
+    }
 
-    // Install packages
+    // Initialize a new Node.js project inside 'backend' folder
+    execSync('npx npm init -y', { cwd: backendDir, stdio: 'inherit' });
+
+    // Update package.json with author name
+    const packageJsonPath = path.join(backendDir, 'package.json');
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
+    packageJson.author = "Syed Mutahir";
+    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+    // console.log('Added author name to package.json');
+
+    // Install packages inside 'backend' folder
     const packages = [
-      "bcrypt@^5.1.1",
-      "cloudinary@^2.2.0",
-      "connect-mongo@^5.1.0",
-      "cookie-parser@^1.4.6",
-      "cors@^2.8.5",
-      "dotenv@^16.4.5",
-      "ejs@^3.1.10",
-      "express@^4.19.2",
-      "express-ejs-layouts@^2.5.1",
-      "express-session@^1.18.0",
-      "jsonwebtoken@^9.0.2",
-      "method-override@^3.0.0",
-      "mongoose@^8.4.1",
-      "multer@^1.4.5-lts.1"
+      "bcrypt",
+      "cloudinary",
+      "connect-mongo",
+      "cookie-parser",
+      "cors",
+      "dotenv",
+      "ejs",
+      "express",
+      "express-ejs-layouts",
+      "express-session",
+      "jsonwebtoken",
+      "method-override",
+      "mongoose",
+      "multer"
     ];
-    execSync(`npm install ${packages.join(' ')}`, { stdio: 'inherit' });
+    execSync(`npm install ${packages.join(' ')}`, { cwd: backendDir, stdio: 'inherit' });
 
-    // Create folders
+    // Create folders inside 'backend' folder
     const folders = ['config', 'middleware', 'models', 'routes', 'public', 'controller'];
     folders.forEach(folder => {
-      if (!fs.existsSync(folder)) {
-        fs.mkdirSync(folder);
+      const folderPath = path.join(backendDir, folder);
+      if (!fs.existsSync(folderPath)) {
+        fs.mkdirSync(folderPath);
         console.log(`Created folder: ${folder}`);
       }
     });
 
-    // Create files
-    const files = ['.env', '.gitignore','app.js'];
+    // Create files inside 'backend' folder
+    const files = ['.env', '.gitignore', 'app.js'];
     files.forEach(file => {
-      const filePath = path.join(process.cwd(), file);
+      const filePath = path.join(backendDir, file);
       if (!fs.existsSync(filePath)) {
         fs.writeFileSync(filePath, '');
         console.log(`Created file: ${file}`);
@@ -53,6 +68,5 @@ program
 
     console.log('Project initialized successfully!');
   });
-
 
 program.parse(process.argv);
