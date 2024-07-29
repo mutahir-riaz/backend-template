@@ -24,12 +24,18 @@ program
     const packageJsonPath = path.join(backendDir, 'package.json');
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
     packageJson.author = "Syed Mutahir";
+packageJson.scripts = {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "app.js",
+    "dev": "nodemon app.js"
+  }
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
     // console.log('Added author name to package.json');
 
     // Install packages inside 'backend' folder
     const packages = [
       "bcrypt",
+      "nodemon",
       "cloudinary",
       "connect-mongo",
       "cookie-parser",
